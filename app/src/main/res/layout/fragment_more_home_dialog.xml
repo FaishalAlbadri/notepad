@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".ui.MoreHomeDialogFragment">
+
+    <TextView
+        android:id="@+id/btn_pin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:drawableLeft="@drawable/ic_pinned_black"
+        android:drawablePadding="8dp"
+        android:drawableTint="@color/black"
+        android:padding="16dp"
+        android:text="Pin Notes"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/btn_unpin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:drawableLeft="@drawable/ic_pinned_black"
+        android:drawablePadding="8dp"
+        android:drawableTint="@color/black"
+        android:padding="16dp"
+        android:text="Unpin Notes"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/btn_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:drawableLeft="@drawable/ic_delete"
+        android:drawablePadding="8dp"
+        android:padding="16dp"
+        android:text="Delete Notes"
+        android:textColor="#D0342C"
+        android:textSize="16sp" />
+</LinearLayout>
