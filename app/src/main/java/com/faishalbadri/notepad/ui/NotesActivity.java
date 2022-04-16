@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -94,6 +95,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 txtStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_saving, 0, 0, 0);
                 txtStatus.setTextColor(getResources().getColor(R.color.gray_aaa));
+                txtStatus.setText("Saving...");
                 handler.removeCallbacks(input_finish_checker);
             }
 
@@ -115,6 +117,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
                 handler.removeCallbacks(input_finish_checker);
                 txtStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_saving, 0, 0, 0);
                 txtStatus.setTextColor(getResources().getColor(R.color.gray_aaa));
+                txtStatus.setText("Saving...");
             }
 
             @Override
@@ -148,13 +151,14 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
 
     @Override
     public void onSuccessDeleteNotes() {
-        onBackPressed();
+        super.onBackPressed();
     }
 
     @Override
     public void onSuccessUpdateNotes() {
         txtStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_saved, 0, 0, 0);
         txtStatus.setTextColor(getResources().getColor(R.color.primary_dark));
+        txtStatus.setText("Saved");
     }
 
     @Override
@@ -185,5 +189,18 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
 
     public void setPinned(int pinned) {
         this.pinned = pinned;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (txtStatus.getText().equals("Saved")) {
+            if (edtTitle.getText().toString().isEmpty() && edtDesc.getText().toString().isEmpty() || edtDesc.getText().toString().isEmpty()) {
+                notesPresenter.deleteNotes(id);
+            } else {
+                super.onBackPressed();
+            }
+        } else {
+            Toast.makeText(this, "Wait until note is saved", Toast.LENGTH_SHORT).show();
+        }
     }
 }
