@@ -23,11 +23,17 @@ public interface RoomInterface {
     @Delete
     void deleteNotes(DataNotes dataNotes);
 
+    @Query("DELETE FROM note WHERE id_notes = :id")
+    void deleteByIdNotes(int id);
+
     @Query("SELECT * FROM note ORDER BY pinned DESC, notes_date DESC")
     List<DataNotes> getNotesAll();
 
     @Query("SELECT * FROM note ORDER BY notes_date DESC LIMIT 1")
     List<DataNotes> getLastNotes();
+
+    @Query("SELECT * FROM note WHERE id_notes = :id")
+    List<DataNotes> getNotesById(int id);
 
     @Query("SELECT * FROM note WHERE notes_title LIKE :key OR notes_desc LIKE :key ORDER BY pinned DESC, notes_date DESC")
     List<DataNotes> searchNotes(String key);
@@ -39,4 +45,8 @@ public interface RoomInterface {
     @TypeConverters(TimestampConverter.class)
     @Query("UPDATE note SET pinned = 0, notes_date = :date WHERE id_notes = :id")
     void unpinNotes(int id, Date date);
+
+    @TypeConverters(TimestampConverter.class)
+    @Query("UPDATE note SET notes_title = :title, notes_desc = :desc ,notes_date = :date WHERE id_notes = :id")
+    void updateNotes(int id, String title, String desc, Date date);
 }

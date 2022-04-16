@@ -19,6 +19,7 @@ import com.faishalbadri.notepad.data.DataNotes;
 import com.faishalbadri.notepad.di.HomeRepositoryInject;
 import com.faishalbadri.notepad.presenter.home.HomeContract;
 import com.faishalbadri.notepad.presenter.home.HomePresenter;
+import com.faishalbadri.notepad.ui.dialogfragment.MoreHomeDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

@@ -13,4 +13,6 @@
     <color name="primary_20">#CC8C00</color>
     <color name="primary_dark">#B37300</color>
     <color name="primary_more_dark">#804000</color>
+
+    <color name="gray_aaa">#aaaaaa</color>
 </resources>

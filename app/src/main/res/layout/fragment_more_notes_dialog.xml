@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.dialogfragment.MoreHomeDialogFragment">
+    tools:context=".ui.dialogfragment.MoreNotesDialogFragment">
 
     <TextView
         android:id="@+id/btn_pin"
@@ -45,4 +45,5 @@
         android:text="Delete Notes"
         android:textColor="#D0342C"
         android:textSize="16sp" />
+
 </LinearLayout>

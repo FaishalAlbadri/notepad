@@ -65,9 +65,5 @@ public class HomeDataLocal implements HomeDataResource {
         DataNotes newNotes = list.get(0);
         Log.i("new notes", "id terbaru : " + newNotes.getId_notes());
         notesAddCallback.onSuccessAddNotes(newNotes.getId_notes());
-
-//        Handler handler = new Handler();
-//        handler.postDelayed(() -> {
-//        }, 500);
     }
 }

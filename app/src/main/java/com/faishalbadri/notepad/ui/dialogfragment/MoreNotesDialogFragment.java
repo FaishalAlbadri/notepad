@@ -1,4 +1,4 @@
-package com.faishalbadri.notepad.ui;
+package com.faishalbadri.notepad.ui.dialogfragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -13,12 +13,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.faishalbadri.notepad.R;
+import com.faishalbadri.notepad.ui.NotesActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MoreHomeDialogFragment extends DialogFragment {
+
+public class MoreNotesDialogFragment extends DialogFragment {
 
     @BindView(R.id.btn_pin)
     TextView btnPin;
@@ -29,16 +31,16 @@ public class MoreHomeDialogFragment extends DialogFragment {
 
     private int pin;
 
-    public MoreHomeDialogFragment() {
+    public MoreNotesDialogFragment() {
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_more_home_dialog, container, false);
+        View view = inflater.inflate(R.layout.fragment_more_notes_dialog, container, false);
         ButterKnife.bind(this, view);
-        pin = ((HomeActivity) getActivity()).getPinnedByItem();
+        pin = ((NotesActivity) getActivity()).getPinned();
         if (pin == 0) {
             btnPin.setVisibility(View.VISIBLE);
         } else {
@@ -66,21 +68,21 @@ public class MoreHomeDialogFragment extends DialogFragment {
         return dialog;
     }
 
-    @OnClick(R.id.btn_pin)
-    public void onClickPin() {
-        ((HomeActivity) getActivity()).pinNotes();
+    @OnClick(R.id.btn_delete)
+    public void onClickDelete() {
+        ((NotesActivity) getActivity()).deleteNotes();
         dismiss();
     }
 
     @OnClick(R.id.btn_unpin)
     public void onClickUnpin() {
-        ((HomeActivity) getActivity()).unpinNotes();
+        ((NotesActivity) getActivity()).unpinNotes();
         dismiss();
     }
 
-    @OnClick(R.id.btn_delete)
-    public void onClickDelete() {
-        ((HomeActivity) getActivity()).deleteNotes();
+    @OnClick(R.id.btn_pin)
+    public void onClickPin() {
+        ((NotesActivity) getActivity()).pinNotes();
         dismiss();
     }
 }

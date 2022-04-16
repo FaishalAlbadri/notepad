@@ -1,15 +1,12 @@
 package com.faishalbadri.notepad.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -66,7 +63,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             ((HomeActivity) context).setPinnedByItem(dataNotes.getPinned(), dataNotes.getId_notes(), listData.get(holder.getAdapterPosition()));
         });
         holder.layout.setOnClickListener(view -> {
-            context.startActivity(new Intent(context, NotesActivity.class).putExtra("status", "edit"));
+            context.startActivity(new Intent(context, NotesActivity.class).putExtra("id", dataNotes.getId_notes()));
         });
     }
 
