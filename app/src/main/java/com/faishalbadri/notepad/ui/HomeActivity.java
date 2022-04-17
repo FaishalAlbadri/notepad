@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +38,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
     RecyclerView rvNotes;
     @BindView(R.id.btn_new_note)
     FloatingActionButton btnNewNote;
+    @BindView(R.id.layout_blank)
+    ConstraintLayout layoutBlank;
 
     private HomePresenter homePresenter;
     private LinearLayoutManager linearLayoutManager;
@@ -110,8 +114,15 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
 
     @Override
     public void onSuccessGetNotes(List<DataNotes> dataNote) {
-        NotesAdapter notesAdapter = new NotesAdapter(dataNote, this);
-        rvNotes.setAdapter(notesAdapter);
+        if (dataNote.size() > 0) {
+            NotesAdapter notesAdapter = new NotesAdapter(dataNote, this);
+            rvNotes.setAdapter(notesAdapter);
+            layoutBlank.setVisibility(View.GONE);
+            rvNotes.setVisibility(View.VISIBLE);
+        } else {
+            layoutBlank.setVisibility(View.VISIBLE);
+            rvNotes.setVisibility(View.GONE);
+        }
     }
 
     @Override

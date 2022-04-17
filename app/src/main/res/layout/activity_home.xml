@@ -58,9 +58,9 @@
                 android:drawableLeft="@drawable/ic_search_primary"
                 android:drawablePadding="8dp"
                 android:hint="Search Notes"
+                android:inputType="text"
                 android:lines="1"
                 android:maxLines="1"
-                android:inputType="text"
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/primary_dark" />
@@ -73,14 +73,52 @@
         android:id="@+id/rv_notes"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_search"
-        tools:listitem="@layout/item_notes"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        tools:itemCount="3"/>
+        tools:itemCount="3"
+        tools:listitem="@layout/item_notes" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_blank"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_search">
+
+        <ImageView
+            android:id="@+id/img_blank"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_blank"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="10:4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.25" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="You Don't Have Any Notes"
+            android:textColor="@color/primary_dark"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_blank" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
