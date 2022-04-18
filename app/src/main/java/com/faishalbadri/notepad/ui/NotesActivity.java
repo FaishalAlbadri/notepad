@@ -19,6 +19,7 @@ import com.faishalbadri.notepad.di.NotesRepositoryInject;
 import com.faishalbadri.notepad.presenter.notes.NotesContract;
 import com.faishalbadri.notepad.presenter.notes.NotesPresenter;
 import com.faishalbadri.notepad.ui.dialogfragment.MoreNotesDialogFragment;
+import com.faishalbadri.notepad.util.knife.KnifeText;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -37,10 +38,10 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
     TextView txtDate;
     @BindView(R.id.txt_status)
     TextView txtStatus;
-    @BindView(R.id.edt_desc)
-    EditText edtDesc;
     @BindView(R.id.edt_title)
     EditText edtTitle;
+    @BindView(R.id.edt_desc)
+    KnifeText edtDesc;
 
     private int id;
     private int pinned = 0;
@@ -70,7 +71,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
     private Runnable input_finish_checker = new Runnable() {
         public void run() {
             if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
-                notesPresenter.updateNotes(id, edtTitle.getText().toString(), edtDesc.getText().toString());
+                notesPresenter.updateNotes(id, edtTitle.getText().toString(), edtDesc.toHtml());
             }
         }
     };
@@ -122,10 +123,14 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
 
             @Override
             public void afterTextChanged(Editable editable) {
-                last_text_edit = System.currentTimeMillis();
-                handler.postDelayed(input_finish_checker, delay);
+                runSaveText();
             }
         });
+    }
+
+    public void runSaveText() {
+        last_text_edit = System.currentTimeMillis();
+        handler.postDelayed(input_finish_checker, delay);
     }
 
     @OnClick(R.id.btn_back)
@@ -143,7 +148,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         DataNotes data = dataNotes.get(0);
         edtTitle.setText(data.getNotes_title());
         edtTitle.clearFocus();
-        edtDesc.setText(data.getNotes_desc());
+        edtDesc.fromHtml(data.getNotes_desc());
         edtDesc.clearFocus();
         txtDate.setText(formatter.format(data.getDates()));
         pinned = data.getPinned();
@@ -189,6 +194,10 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
 
     public void setPinned(int pinned) {
         this.pinned = pinned;
+    }
+
+    public KnifeText getEdtDesc() {
+        return edtDesc;
     }
 
     @Override

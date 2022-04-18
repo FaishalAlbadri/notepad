@@ -2,6 +2,7 @@ package com.faishalbadri.notepad.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         DataNotes dataNotes = listData.get(position);
         pinned = dataNotes.getPinned();
         holder.txtTitle.setText(dataNotes.getNotes_title());
-        holder.txtDesc.setText(dataNotes.getNotes_desc());
+        holder.txtDesc.setText(Html.fromHtml(dataNotes.getNotes_desc()));
         holder.txtDate.setText(formatter.format(dataNotes.getDates()));
         if (pinned == 1) {
             holder.txtPinned.setVisibility(View.VISIBLE);

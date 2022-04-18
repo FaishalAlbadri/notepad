@@ -2,6 +2,7 @@ package com.faishalbadri.notepad.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -29,6 +30,7 @@ public class DataNotes implements Serializable {
     @ColumnInfo(name = "pinned")
     private int pinned;
 
+    @Ignore
     public DataNotes() {
     }
 
