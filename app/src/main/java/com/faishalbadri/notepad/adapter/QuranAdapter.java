@@ -12,10 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.faishalbadri.notepad.R;
-import com.faishalbadri.notepad.data.quran.QuranItem;
+import com.faishalbadri.notepad.data.alquran.AlquranItem;
+import com.faishalbadri.notepad.ui.NotesActivity;
+import com.linkedin.android.spyglass.suggestions.interfaces.Suggestible;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,11 +27,11 @@ import butterknife.ButterKnife;
 public class QuranAdapter extends RecyclerView.Adapter<QuranAdapter.ViewHolder> {
 
     private Context context;
-    private List<QuranItem> listdata;
+    private List<? extends Suggestible> suggestions;
 
-    public QuranAdapter(Context context, List<QuranItem> listdata) {
+    public QuranAdapter(Context context, List<? extends Suggestible> suggestions) {
         this.context = context;
-        this.listdata = listdata;
+        this.suggestions = suggestions;
     }
 
     @NonNull
@@ -42,18 +45,22 @@ public class QuranAdapter extends RecyclerView.Adapter<QuranAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-        final QuranItem quranItem = listdata.get(position);
-        holder.txtSuratAyat.setText(quranItem.getSurat() + ": " + quranItem.getAyat());
-        holder.txtIsiAyat.setText(quranItem.getIsi());
+        Suggestible suggestion = suggestions.get(position);
+        if (!(suggestion instanceof AlquranItem)) {
+            return;
+        }
+        final AlquranItem quranItem = (AlquranItem) suggestion;
+        holder.txtSuratAyat.setText(quranItem.getSurahName() + ": " + quranItem.getVerse());
+        holder.txtIsiAyat.setText(quranItem.getAyatIndo());
         
         holder.layout.setOnClickListener(view -> {
-            Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
+            ((NotesActivity) context).onClickItemAutoComplete(quranItem);
         });
     }
 
     @Override
     public int getItemCount() {
-        return listdata.size();
+        return suggestions.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

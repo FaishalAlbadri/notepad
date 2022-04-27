@@ -73,4 +73,5 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 
     //rich text editor
+    implementation 'com.linkedin.android.spyglass:spyglass:3.0.1'
 }

@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout"
-    android:layout_width="match_parent"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:layout_margin="8dp">
 
-    <TextView
-        android:id="@+id/txt_surat_ayat"
+    <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:text="Al A'raf: 187" />
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="8dp">
 
-    <TextView
-        android:id="@+id/txt_isi_ayat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="asdas asdasd sadasd asdasd sadas asdas asdasd asdasdas asdasd asdas asdasd"
-        android:textStyle="italic" />
+        <TextView
+            android:id="@+id/txt_surat_ayat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Al A'raf: 187" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/txt_isi_ayat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:lines="3"
+            android:maxLines="3"
+            android:text="asdas asdasd sadasd asdasd sadas asdas asdasd asdasdas asdasd asdas asdasd asdas asdasd sadasd asdasd sadas asdas asdasd asdasdas asdasd asdas asdasd asdas asdasd sadasd asdasd sadas asdas asdasd asdasdas asdasd asdas asdasd"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

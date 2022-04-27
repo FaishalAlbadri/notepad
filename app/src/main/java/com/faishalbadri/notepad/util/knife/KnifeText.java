@@ -19,12 +19,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.faishalbadri.notepad.R;
+import com.linkedin.android.spyglass.ui.MentionsEditText;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class KnifeText extends EditText implements TextWatcher {
+public class KnifeText extends MentionsEditText implements TextWatcher {
     public static final int FORMAT_BOLD = 0x01;
     public static final int FORMAT_ITALIC = 0x02;
     public static final int FORMAT_UNDERLINED = 0x03;
@@ -66,11 +67,11 @@ public class KnifeText extends EditText implements TextWatcher {
         init(attrs);
     }
 
-    @SuppressWarnings("NewApi")
-    public KnifeText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(attrs);
-    }
+//    @SuppressWarnings("NewApi")
+//    public KnifeText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+//        super(context, attrs, defStyleAttr, defStyleRes);
+//        init(attrs);
+//    }
 
     private void init(AttributeSet attrs) {
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.KnifeText);
