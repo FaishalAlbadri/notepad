@@ -149,6 +149,8 @@
                 android:background="@android:color/transparent"
                 android:gravity="start"
                 android:hint="Start typing  here"
+                android:inputType="textNoSuggestions|textMultiLine|textVisiblePassword"
+                android:importantForAutofill="no"
                 app:bulletColor="@color/blue_500"
                 app:bulletGapWidth="@dimen/bullet_gap_width"
                 app:bulletRadius="@dimen/bullet_radius"
