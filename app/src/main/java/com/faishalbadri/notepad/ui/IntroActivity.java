@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class IntroActivity extends AppCompatActivity {
 
-    private static final int MAX_STEP = 4;
+    private static final int MAX_STEP = 2;
 
     @BindView(R.id.btn_got_it)
     Button btnGotIt;
@@ -34,20 +34,20 @@ public class IntroActivity extends AppCompatActivity {
     Button btnSkip;
 
     private String[] title_array = {
-            "Intro One", "Intro Two",
-            "Intro Three"
+            "Selamat Datang",
+            "Autocomplete Alquran"
     };
     private String[] description_array = {
-            "Tambahkan teks disini agar terlihat lebih keren", "Tambahkan teks disini agar terlihat lebih keren",
-            "Tambahkan teks disini agar terlihat lebih keren"
+            "Notepad islami adalah aplikasi yang dapat membantu kalian dalam mencatat catatan islami",
+            "Kalian dapat mencari ayat tentang apapun yang kalian mau hanya dengan menambahkan simbol ~"
     };
     private int[] about_images_array = {
-            R.drawable.ic_bold, R.drawable.ic_italic,
-            R.drawable.ic_underline
+            R.drawable.logo_white,
+            R.drawable.keyword
     };
     private int[] color_array = {
-            R.color.colorBlackDoff, R.color.colorBlackDoff,
-            R.color.colorBlackDoff
+            R.color.primary_dark,
+            R.color.primary_20
     };
 
     @Override

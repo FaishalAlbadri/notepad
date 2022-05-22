@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -43,11 +44,12 @@ public class SplashScreen extends AppCompatActivity implements SplashScreenContr
     public void onSuccessGetNotes() {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            if (!introManager.isFirstTimeLaunch()) {
+            Log.i("asdasdasdas", String.valueOf(introManager.isFirstTimeLaunch()));
+            if (introManager.isFirstTimeLaunch()) {
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 finish();
             } else {
-                introManager.setFirstTimeLaunch(false);
+                introManager.setFirstTimeLaunch(true);
                 startActivity(new Intent(getApplicationContext(), IntroActivity.class));
                 finish();
             }

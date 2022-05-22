@@ -20,7 +20,7 @@
             android:layout_height="250dp"
             android:padding="35dp"
             android:src="@drawable/ic_search_primary"
-            android:tint="@color/colorGold" />
+            android:tint="@color/white" />
 
         <TextView
             android:id="@+id/title"
