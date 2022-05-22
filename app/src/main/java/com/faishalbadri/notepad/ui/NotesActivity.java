@@ -3,7 +3,9 @@ package com.faishalbadri.notepad.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,11 +17,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.faishalbadri.notepad.R;
 import com.faishalbadri.notepad.adapter.QuranAdapter;
 import com.faishalbadri.notepad.api.local.RoomClient;
 import com.faishalbadri.notepad.data.DataNotes;
-import com.faishalbadri.notepad.data.alquran.AlquranItem;
+import com.faishalbadri.notepad.data.alquran.QuranItem;
 import com.faishalbadri.notepad.di.AlquranRepositoryInject;
 import com.faishalbadri.notepad.di.NotesRepositoryInject;
 import com.faishalbadri.notepad.presenter.alquran.AlquranContract;
@@ -64,6 +67,10 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
     KnifeText edtDesc;
     @BindView(R.id.rv_autocomplete)
     RecyclerView rvAutocomplete;
+    @BindView(R.id.img_loading)
+    ImageView imgLoading;
+    @BindView(R.id.txt_keyword)
+    TextView txtKeyword;
 
     private int id;
     private static final String BUCKET = "autocomplete-network";
@@ -73,7 +80,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
     private AlquranPresenter alquranPresenter;
 
     private QuranAdapter alquranAdapter;
-    private ArrayList<AlquranItem> listdata;
+    private ArrayList<QuranItem> listdata;
 
     private SimpleDateFormat formatter;
 
@@ -93,7 +100,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
     private static final WordTokenizerConfig tokenizerConfig = new WordTokenizerConfig
             .Builder()
             .setExplicitChars("~")
-            .setMaxNumKeywords(3)
+            .setMaxNumKeywords(5)
             .build();
 
     @Override
@@ -113,6 +120,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
             if (System.currentTimeMillis() > (last_text_edit_autocomplete + delay_autocomplete - 500)) {
                 if (!key_auotcomplete.getKeywords().isEmpty()) {
                     alquranPresenter.getAlquranAutoComplete(key_auotcomplete.getKeywords());
+                    imgLoading.setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -143,6 +151,10 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
 
         listdata = new ArrayList<>();
         alquranAdapter = new QuranAdapter(this, listdata);
+
+        Glide.with(this)
+                .load(R.raw.loading)
+                .into(imgLoading);
 
         rvAutocomplete.setLayoutManager(new LinearLayoutManager(NotesActivity.this, LinearLayoutManager.HORIZONTAL, false));
         rvAutocomplete.setAdapter(alquranAdapter);
@@ -277,7 +289,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
     }
 
     @Override
-    public void onSuccessAlquranAutoComplete(List<AlquranItem> alquranItems) {
+    public void onSuccessAlquranAutoComplete(List<QuranItem> alquranItems) {
         SuggestionsResult result = new SuggestionsResult(key_auotcomplete, (List<? extends Suggestible>) alquranItems);
         onReceiveSuggestionsResult(result, BUCKET);
     }
@@ -294,13 +306,19 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         List<String> buckets = Collections.singletonList(BUCKET);
         key_auotcomplete = queryToken;
         last_text_edit_autocomplete = System.currentTimeMillis();
-        handler_autocomplete.postDelayed(input_finish_checker_autocomplete, delay_autocomplete);
+        String text = "~" + key_auotcomplete.getKeywords();
+        if (edtDesc.toHtml().contains(text)) {
+            txtKeyword.setVisibility(View.VISIBLE);
+            txtKeyword.setText(Html.fromHtml(String.format(getResources().getString(R.string.text_cari_ayat), key_auotcomplete.getKeywords())));
+            handler_autocomplete.postDelayed(input_finish_checker_autocomplete, delay_autocomplete);
+        }
         return buckets;
     }
 
     @Override
     public void onReceiveSuggestionsResult(@NonNull @NotNull SuggestionsResult result, @NonNull @NotNull String bucket) {
         List<? extends Suggestible> suggestions = result.getSuggestions();
+        imgLoading.setVisibility(View.GONE);
         alquranAdapter = new QuranAdapter(this, result.getSuggestions());
         rvAutocomplete.swapAdapter(alquranAdapter, true);
         boolean display = suggestions != null && suggestions.size() > 0;
@@ -313,6 +331,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
             rvAutocomplete.setVisibility(RecyclerView.VISIBLE);
         } else {
             rvAutocomplete.setVisibility(RecyclerView.GONE);
+            txtKeyword.setVisibility(View.GONE);
         }
     }
 
@@ -321,9 +340,9 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         return rvAutocomplete.getVisibility() == RecyclerView.VISIBLE;
     }
 
-    public void onClickItemAutoComplete(AlquranItem quranItem) {
+    public void onClickItemAutoComplete(QuranItem quranItem) {
         edtDesc.insertMention(quranItem);
-        rvAutocomplete.swapAdapter(new QuranAdapter(this, new ArrayList<AlquranItem>()), true);
+        rvAutocomplete.swapAdapter(new QuranAdapter(this, new ArrayList<QuranItem>()), true);
         displaySuggestions(false);
         edtDesc.requestFocus();
         notesPresenter.updateNotes(id, edtTitle.getText().toString(), edtDesc.toHtml());

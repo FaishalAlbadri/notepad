@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.faishalbadri.notepad.R;
-import com.faishalbadri.notepad.data.alquran.AlquranItem;
+import com.faishalbadri.notepad.data.alquran.QuranItem;
 import com.faishalbadri.notepad.ui.NotesActivity;
 import com.linkedin.android.spyglass.suggestions.interfaces.Suggestible;
 
@@ -46,12 +46,12 @@ public class QuranAdapter extends RecyclerView.Adapter<QuranAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         Suggestible suggestion = suggestions.get(position);
-        if (!(suggestion instanceof AlquranItem)) {
+        if (!(suggestion instanceof QuranItem)) {
             return;
         }
-        final AlquranItem quranItem = (AlquranItem) suggestion;
-        holder.txtSuratAyat.setText(quranItem.getSurahName() + ": " + quranItem.getVerse());
-        holder.txtIsiAyat.setText(quranItem.getAyatIndo());
+        final QuranItem quranItem = (QuranItem) suggestion;
+        holder.txtSuratAyat.setText(quranItem.getNamaSurah() + ": " + quranItem.getNoAyat());
+        holder.txtIsiAyat.setText(quranItem.getText());
         
         holder.layout.setOnClickListener(view -> {
             ((NotesActivity) context).onClickItemAutoComplete(quranItem);

@@ -14,10 +14,12 @@ import com.faishalbadri.notepad.api.local.RoomClient;
 import com.faishalbadri.notepad.di.SplashScreenRepositoryInject;
 import com.faishalbadri.notepad.presenter.splashscreen.SplashScreenContract;
 import com.faishalbadri.notepad.presenter.splashscreen.SplashScreenPresenter;
+import com.faishalbadri.notepad.util.IntroManager;
 
 public class SplashScreen extends AppCompatActivity implements SplashScreenContract.splashScreenView {
 
     private SplashScreenPresenter splashScreenPresenter;
+    private IntroManager introManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,9 @@ public class SplashScreen extends AppCompatActivity implements SplashScreenContr
         splashScreenPresenter = new SplashScreenPresenter(SplashScreenRepositoryInject.provideTo(RoomClient.getInstance(this)));
         splashScreenPresenter.onAttachView(this);
         splashScreenPresenter.getNotes();
+
+        introManager = new IntroManager(this);
+
     }
 
 
@@ -38,8 +43,15 @@ public class SplashScreen extends AppCompatActivity implements SplashScreenContr
     public void onSuccessGetNotes() {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            finish();
+            if (!introManager.isFirstTimeLaunch()) {
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                finish();
+            } else {
+                introManager.setFirstTimeLaunch(false);
+                startActivity(new Intent(getApplicationContext(), IntroActivity.class));
+                finish();
+            }
+
         },3000);
     }
 }

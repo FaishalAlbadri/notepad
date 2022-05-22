@@ -2,7 +2,7 @@ package com.faishalbadri.notepad.repository.alquran;
 
 import androidx.annotation.NonNull;
 
-import com.faishalbadri.notepad.data.alquran.AlquranItem;
+import com.faishalbadri.notepad.data.alquran.QuranItem;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface AlquranDataResource {
 
     interface AlquranGetCallback {
 
-        void onSuccessAlquranAutoComplete(List<AlquranItem> alquranItems);
+        void onSuccessAlquranAutoComplete(List<QuranItem> alquranItems);
 
         void onErrorAlquranAutoComplete(String msg);
     }

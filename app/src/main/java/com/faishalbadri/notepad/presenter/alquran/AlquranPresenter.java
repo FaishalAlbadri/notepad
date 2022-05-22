@@ -1,6 +1,6 @@
 package com.faishalbadri.notepad.presenter.alquran;
 
-import com.faishalbadri.notepad.data.alquran.AlquranItem;
+import com.faishalbadri.notepad.data.alquran.QuranItem;
 import com.faishalbadri.notepad.repository.alquran.AlquranDataResource;
 import com.faishalbadri.notepad.repository.alquran.AlquranRepository;
 
@@ -19,7 +19,7 @@ public class AlquranPresenter implements AlquranContract.alquranPresenter {
     public void getAlquranAutoComplete(String key) {
         alquranRepository.getAlquranAutoComplete(key, new AlquranDataResource.AlquranGetCallback() {
             @Override
-            public void onSuccessAlquranAutoComplete(List<AlquranItem> alquranItems) {
+            public void onSuccessAlquranAutoComplete(List<QuranItem> alquranItems) {
                 alquranView.onSuccessAlquranAutoComplete(alquranItems);
             }
 
