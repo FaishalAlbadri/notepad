@@ -7,63 +7,6 @@
     tools:context=".ui.dialogfragment.MoreNotesDialogFragment">
 
     <TextView
-        android:id="@+id/btn_bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:drawableLeft="@drawable/ic_bold"
-        android:drawablePadding="8dp"
-        android:drawableTint="@color/black"
-        android:padding="16dp"
-        android:text="Bold Text"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/btn_italic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:drawableLeft="@drawable/ic_italic"
-        android:drawablePadding="8dp"
-        android:drawableTint="@color/black"
-        android:padding="16dp"
-        android:text="Italic Text"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="italic"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/btn_undeline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:drawableLeft="@drawable/ic_underline"
-        android:drawablePadding="8dp"
-        android:drawableTint="@color/black"
-        android:padding="16dp"
-        android:text="Underline Text"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/btn_bullets"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:drawableLeft="@drawable/ic_baseline_list"
-        android:drawablePadding="8dp"
-        android:drawableTint="@color/black"
-        android:padding="16dp"
-        android:text="Bullets List"
-        android:textColor="@color/black"
-        android:textSize="16sp"/>
-
-    <TextView
         android:id="@+id/btn_pin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

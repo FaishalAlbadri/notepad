@@ -30,17 +30,8 @@ public class MoreNotesDialogFragment extends DialogFragment {
     TextView btnUnpin;
     @BindView(R.id.btn_delete)
     TextView btnDelete;
-    @BindView(R.id.btn_bold)
-    TextView btnBold;
-    @BindView(R.id.btn_italic)
-    TextView btnItalic;
-    @BindView(R.id.btn_undeline)
-    TextView btnUndeline;
-    @BindView(R.id.btn_bullets)
-    TextView btnBullets;
 
     private int pin;
-    private AREditText edtDesc;
 
     public MoreNotesDialogFragment() {
 
@@ -52,22 +43,10 @@ public class MoreNotesDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_more_notes_dialog, container, false);
         ButterKnife.bind(this, view);
         pin = ((NotesActivity) getActivity()).getPinned();
-        edtDesc = ((NotesActivity) getActivity()).getEdtDesc();
-
         if (pin == 0) {
             btnPin.setVisibility(View.VISIBLE);
         } else {
             btnUnpin.setVisibility(View.VISIBLE);
-        }
-
-        if (edtDesc.getSelectionStart() != edtDesc.getSelectionEnd()) {
-            btnBold.setVisibility(View.VISIBLE);
-            btnItalic.setVisibility(View.VISIBLE);
-            btnUndeline.setVisibility(View.VISIBLE);
-        } else {
-            btnBold.setVisibility(View.GONE);
-            btnItalic.setVisibility(View.GONE);
-            btnUndeline.setVisibility(View.GONE);
         }
         return view;
     }
@@ -108,32 +87,4 @@ public class MoreNotesDialogFragment extends DialogFragment {
         ((NotesActivity) getActivity()).pinNotes();
         dismiss();
     }
-
-//    @OnClick(R.id.btn_undeline)
-//    public void onClickUnderline() {
-//        edtDesc.underline(!edtDesc.contains(KnifeText.FORMAT_UNDERLINED));
-//        ((NotesActivity) getActivity()).runSaveText();
-//        dismiss();
-//    }
-//
-//    @OnClick(R.id.btn_italic)
-//    public void onClickItalic() {
-//        edtDesc.italic(!edtDesc.contains(KnifeText.FORMAT_ITALIC));
-//        ((NotesActivity) getActivity()).runSaveText();
-//        dismiss();
-//    }
-//
-//    @OnClick(R.id.btn_bold)
-//    public void onClickBold() {
-//        edtDesc.bold(!edtDesc.contains(KnifeText.FORMAT_BOLD));
-//        ((NotesActivity) getActivity()).runSaveText();
-//        dismiss();
-//    }
-//
-//    @OnClick(R.id.btn_bullets)
-//    public void onClickBullets() {
-//        edtDesc.bullet(!edtDesc.contains(KnifeText.FORMAT_BULLET));
-//        ((NotesActivity) getActivity()).runSaveText();
-//        dismiss();
-//    }
 }
