@@ -51,6 +51,19 @@
         android:visibility="gone" />
 
     <TextView
+        android:id="@+id/btn_bullets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:drawableLeft="@drawable/ic_baseline_list"
+        android:drawablePadding="8dp"
+        android:drawableTint="@color/black"
+        android:padding="16dp"
+        android:text="Bullets List"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+    <TextView
         android:id="@+id/btn_pin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

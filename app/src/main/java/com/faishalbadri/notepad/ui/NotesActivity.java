@@ -1,5 +1,6 @@
 package com.faishalbadri.notepad.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -12,12 +13,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.chinalwb.are.AREditText;
+import com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault;
+import com.chinalwb.are.styles.toolitems.ARE_ToolItem_AlignmentCenter;
+import com.chinalwb.are.styles.toolitems.ARE_ToolItem_AlignmentLeft;
+import com.chinalwb.are.styles.toolitems.ARE_ToolItem_AlignmentRight;
+import com.chinalwb.are.styles.toolitems.ARE_ToolItem_Bold;
+import com.chinalwb.are.styles.toolitems.ARE_ToolItem_FontColor;
+import com.chinalwb.are.styles.toolitems.ARE_ToolItem_FontSize;
+import com.chinalwb.are.styles.toolitems.ARE_ToolItem_Italic;
+import com.chinalwb.are.styles.toolitems.ARE_ToolItem_ListBullet;
+import com.chinalwb.are.styles.toolitems.ARE_ToolItem_ListNumber;
+import com.chinalwb.are.styles.toolitems.ARE_ToolItem_Underline;
 import com.faishalbadri.notepad.R;
 import com.faishalbadri.notepad.adapter.QuranAdapter;
 import com.faishalbadri.notepad.api.local.RoomClient;
@@ -30,7 +44,6 @@ import com.faishalbadri.notepad.presenter.alquran.AlquranPresenter;
 import com.faishalbadri.notepad.presenter.notes.NotesContract;
 import com.faishalbadri.notepad.presenter.notes.NotesPresenter;
 import com.faishalbadri.notepad.ui.dialogfragment.MoreNotesDialogFragment;
-import com.faishalbadri.notepad.util.knife.KnifeText;
 import com.linkedin.android.spyglass.suggestions.SuggestionsResult;
 import com.linkedin.android.spyglass.suggestions.interfaces.Suggestible;
 import com.linkedin.android.spyglass.suggestions.interfaces.SuggestionsResultListener;
@@ -64,13 +77,15 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
     @BindView(R.id.edt_title)
     EditText edtTitle;
     @BindView(R.id.edt_desc)
-    KnifeText edtDesc;
+    AREditText edtDesc;
     @BindView(R.id.rv_autocomplete)
     RecyclerView rvAutocomplete;
     @BindView(R.id.img_loading)
     ImageView imgLoading;
     @BindView(R.id.txt_keyword)
     TextView txtKeyword;
+    @BindView(R.id.areToolbar)
+    ARE_ToolbarDefault areToolbar;
 
     private int id;
     private static final String BUCKET = "autocomplete-network";
@@ -111,7 +126,6 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         ButterKnife.bind(this);
 
         id = getIntent().getIntExtra("id", 0);
-
         setView();
     }
 
@@ -129,7 +143,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
     private Runnable input_finish_checker = new Runnable() {
         public void run() {
             if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
-                notesPresenter.updateNotes(id, edtTitle.getText().toString(), edtDesc.toHtml());
+                notesPresenter.updateNotes(id, edtTitle.getText().toString(), edtDesc.getHtml());
             }
         }
     };
@@ -139,6 +153,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         edtDesc.setTokenizer(new WordTokenizer(tokenizerConfig));
         edtDesc.setQueryTokenReceiver(this);
         edtDesc.setSuggestionsVisibilityManager(this);
+        setToolbarEdit();
         moreNotesDialogFragment = new MoreNotesDialogFragment();
         fragmentManager = getSupportFragmentManager();
         notesPresenter =
@@ -203,6 +218,21 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         });
     }
 
+    private void setToolbarEdit() {
+        areToolbar.addToolbarItem(new ARE_ToolItem_Bold());
+        areToolbar.addToolbarItem(new ARE_ToolItem_Italic());
+        areToolbar.addToolbarItem(new ARE_ToolItem_Underline());
+        areToolbar.addToolbarItem(new ARE_ToolItem_FontSize());
+        areToolbar.addToolbarItem(new ARE_ToolItem_FontColor());
+        areToolbar.addToolbarItem(new ARE_ToolItem_ListNumber());
+        areToolbar.addToolbarItem(new ARE_ToolItem_ListBullet());
+        areToolbar.addToolbarItem(new ARE_ToolItem_AlignmentLeft());
+        areToolbar.addToolbarItem(new ARE_ToolItem_AlignmentCenter());
+        areToolbar.addToolbarItem(new ARE_ToolItem_AlignmentRight());
+
+        edtDesc.setToolbar(areToolbar);
+    }
+
     public void runSaveText() {
         last_text_edit = System.currentTimeMillis();
         handler.postDelayed(input_finish_checker, delay);
@@ -223,6 +253,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         DataNotes data = dataNotes.get(0);
         edtTitle.setText(data.getNotes_title());
         edtTitle.clearFocus();
+        edtDesc.setText("");
         edtDesc.fromHtml(data.getNotes_desc());
         edtDesc.clearFocus();
         txtDate.setText(formatter.format(data.getDates()));
@@ -271,7 +302,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         this.pinned = pinned;
     }
 
-    public KnifeText getEdtDesc() {
+    public AREditText getEdtDesc() {
         return edtDesc;
     }
 
@@ -307,7 +338,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         key_auotcomplete = queryToken;
         last_text_edit_autocomplete = System.currentTimeMillis();
         String text = "~" + key_auotcomplete.getKeywords();
-        if (edtDesc.toHtml().contains(text)) {
+        if (edtDesc.getHtml().contains(text)) {
             txtKeyword.setVisibility(View.VISIBLE);
             txtKeyword.setText(Html.fromHtml(String.format(getResources().getString(R.string.text_cari_ayat), key_auotcomplete.getKeywords())));
             handler_autocomplete.postDelayed(input_finish_checker_autocomplete, delay_autocomplete);
@@ -345,8 +376,14 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         rvAutocomplete.swapAdapter(new QuranAdapter(this, new ArrayList<QuranItem>()), true);
         displaySuggestions(false);
         edtDesc.requestFocus();
-        notesPresenter.updateNotes(id, edtTitle.getText().toString(), edtDesc.toHtml());
+        notesPresenter.updateNotes(id, edtTitle.getText().toString(), edtDesc.getHtml());
         Handler handleeRefresh = new Handler();
         handleeRefresh.postDelayed(() -> notesPresenter.getNotes(id), 200);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        areToolbar.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -1,2 +1,3 @@
 rootProject.name = "Notepad"
 include ':app'
+include ':are'

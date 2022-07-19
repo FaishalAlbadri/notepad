@@ -161,7 +161,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/areToolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rv_autocomplete">
@@ -174,7 +174,7 @@
             android:paddingRight="16dp"
             android:paddingBottom="16dp">
 
-            <com.faishalbadri.notepad.util.knife.KnifeText
+            <com.chinalwb.are.AREditText
                 android:id="@+id/edt_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -182,18 +182,16 @@
                 android:gravity="start"
                 android:hint="Start typing  here"
                 android:importantForAutofill="no"
-                android:inputType="textNoSuggestions|textMultiLine|textVisiblePassword"
-                app:bulletColor="@color/blue_500"
-                app:bulletGapWidth="@dimen/bullet_gap_width"
-                app:bulletRadius="@dimen/bullet_radius"
-                app:historyEnable="true"
-                app:historySize="99"
-                app:linkColor="@color/blue_500"
-                app:linkUnderline="true"
-                app:quoteCapWidth="@dimen/quote_gap_width"
-                app:quoteColor="@color/blue_500"
-                app:quoteStripeWidth="@dimen/quote_stripe_width" />
+                android:inputType="textNoSuggestions|textMultiLine|textVisiblePassword"/>
         </LinearLayout>
     </ScrollView>
+
+    <com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
+        android:id="@+id/areToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/background_toolbar_top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

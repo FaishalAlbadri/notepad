@@ -1,23 +1,18 @@
 package com.faishalbadri.notepad.ui.dialogfragment;
 
 import android.app.Dialog;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.StyleSpan;
-import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.chinalwb.are.AREditText;
 import com.faishalbadri.notepad.R;
 import com.faishalbadri.notepad.ui.NotesActivity;
 import com.faishalbadri.notepad.util.knife.KnifeText;
@@ -41,9 +36,11 @@ public class MoreNotesDialogFragment extends DialogFragment {
     TextView btnItalic;
     @BindView(R.id.btn_undeline)
     TextView btnUndeline;
+    @BindView(R.id.btn_bullets)
+    TextView btnBullets;
 
     private int pin;
-    private KnifeText edtDesc;
+    private AREditText edtDesc;
 
     public MoreNotesDialogFragment() {
 
@@ -112,24 +109,31 @@ public class MoreNotesDialogFragment extends DialogFragment {
         dismiss();
     }
 
-    @OnClick(R.id.btn_undeline)
-    public void onClickUnderline() {
-        edtDesc.underline(!edtDesc.contains(KnifeText.FORMAT_UNDERLINED));
-        ((NotesActivity) getActivity()).runSaveText();
-        dismiss();
-    }
-
-    @OnClick(R.id.btn_italic)
-    public void onClickItalic() {
-        edtDesc.italic(!edtDesc.contains(KnifeText.FORMAT_ITALIC));
-        ((NotesActivity) getActivity()).runSaveText();
-        dismiss();
-    }
-
-    @OnClick(R.id.btn_bold)
-    public void onClickBold() {
-        edtDesc.bold(!edtDesc.contains(KnifeText.FORMAT_BOLD));
-        ((NotesActivity) getActivity()).runSaveText();
-        dismiss();
-    }
+//    @OnClick(R.id.btn_undeline)
+//    public void onClickUnderline() {
+//        edtDesc.underline(!edtDesc.contains(KnifeText.FORMAT_UNDERLINED));
+//        ((NotesActivity) getActivity()).runSaveText();
+//        dismiss();
+//    }
+//
+//    @OnClick(R.id.btn_italic)
+//    public void onClickItalic() {
+//        edtDesc.italic(!edtDesc.contains(KnifeText.FORMAT_ITALIC));
+//        ((NotesActivity) getActivity()).runSaveText();
+//        dismiss();
+//    }
+//
+//    @OnClick(R.id.btn_bold)
+//    public void onClickBold() {
+//        edtDesc.bold(!edtDesc.contains(KnifeText.FORMAT_BOLD));
+//        ((NotesActivity) getActivity()).runSaveText();
+//        dismiss();
+//    }
+//
+//    @OnClick(R.id.btn_bullets)
+//    public void onClickBullets() {
+//        edtDesc.bullet(!edtDesc.contains(KnifeText.FORMAT_BULLET));
+//        ((NotesActivity) getActivity()).runSaveText();
+//        dismiss();
+//    }
 }
