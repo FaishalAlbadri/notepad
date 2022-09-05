@@ -32,7 +32,16 @@ public class ListNumberSpan implements AreListSpan {
   }
 
   public int getLeadingMargin(boolean first) {
-    return LEADING_MARGIN + 50;
+
+      int space;
+      if (mNumber > 9 && mNumber < 100) {
+          space = LEADING_MARGIN + 80;
+      } else if (mNumber > 99 && mNumber < 1000) {
+          space = LEADING_MARGIN + 110;
+      } else {
+          space = LEADING_MARGIN + 50;
+      }
+    return space;
   }
 
   @Override
