@@ -52,7 +52,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         DataNotes dataNotes = listData.get(position);
         pinned = dataNotes.getPinned();
-        holder.txtTitle.setText(dataNotes.getNotes_title());
+        if (dataNotes.getNotes_title().isEmpty()){
+            holder.txtTitle.setText("Belum Ada Judul");
+        } else {
+            holder.txtTitle.setText(dataNotes.getNotes_title());
+        }
         holder.txtDesc.setText(Html.fromHtml(dataNotes.getNotes_desc()));
         holder.txtDate.setText(formatter.format(dataNotes.getDates()));
         if (pinned == 1) {
