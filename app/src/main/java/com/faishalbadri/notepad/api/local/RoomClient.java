@@ -5,10 +5,14 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.faishalbadri.notepad.data.DataAlquranAyat;
+import com.faishalbadri.notepad.data.DataAlquranSurat;
 import com.faishalbadri.notepad.data.DataNotes;
 
-@Database(entities = {DataNotes.class}, version = 1)
+@Database(entities = {DataNotes.class, DataAlquranSurat.class, DataAlquranAyat.class}, version = 2)
 public abstract class RoomClient extends RoomDatabase {
 
     private static RoomClient database;
@@ -20,6 +24,7 @@ public abstract class RoomClient extends RoomDatabase {
             database = Room.databaseBuilder(
                     context.getApplicationContext(),
                     RoomClient.class, DATABASE_NAME)
+                    .fallbackToDestructiveMigration()
                     .allowMainThreadQueries()
                     .build();
         }

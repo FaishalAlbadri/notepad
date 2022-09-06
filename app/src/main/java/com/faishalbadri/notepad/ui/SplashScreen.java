@@ -31,7 +31,7 @@ public class SplashScreen extends AppCompatActivity implements SplashScreenContr
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        splashScreenPresenter = new SplashScreenPresenter(SplashScreenRepositoryInject.provideTo(RoomClient.getInstance(this)));
+        splashScreenPresenter = new SplashScreenPresenter(SplashScreenRepositoryInject.provideTo(RoomClient.getInstance(this), this));
         splashScreenPresenter.onAttachView(this);
         splashScreenPresenter.getNotes();
 
@@ -44,7 +44,6 @@ public class SplashScreen extends AppCompatActivity implements SplashScreenContr
     public void onSuccessGetNotes() {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            Log.i("asdasdasdas", String.valueOf(introManager.isFirstTimeLaunch()));
             if (introManager.isFirstTimeLaunch()) {
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 finish();

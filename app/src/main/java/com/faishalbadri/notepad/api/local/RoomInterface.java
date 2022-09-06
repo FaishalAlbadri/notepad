@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.TypeConverters;
 
+import com.faishalbadri.notepad.data.DataAlquranAyat;
+import com.faishalbadri.notepad.data.DataAlquranSurat;
 import com.faishalbadri.notepad.data.DataNotes;
 import com.faishalbadri.notepad.util.TimestampConverter;
 
@@ -18,6 +20,12 @@ import static androidx.room.OnConflictStrategy.REPLACE;
 public interface RoomInterface {
 
     @Insert(onConflict = REPLACE)
+    void addAlquranSurat(DataAlquranSurat dataAlquranSurat);
+
+    @Insert(onConflict = REPLACE)
+    void addAlquranAyat(DataAlquranAyat dataAlquranAyat);
+
+    @Insert(onConflict = REPLACE)
     void addNotes(DataNotes dataNotes);
 
     @Delete
@@ -28,6 +36,12 @@ public interface RoomInterface {
 
     @Query("SELECT * FROM note ORDER BY pinned DESC, notes_date DESC")
     List<DataNotes> getNotesAll();
+
+    @Query("SELECT * FROM surat ORDER BY id ASC")
+    List<DataAlquranSurat> getAlquranSuratAll();
+
+    @Query("SELECT * FROM ayat ORDER BY id ASC")
+    List<DataAlquranAyat> getAlquranAyatAll();
 
     @Query("SELECT * FROM note ORDER BY notes_date DESC LIMIT 1")
     List<DataNotes> getLastNotes();
