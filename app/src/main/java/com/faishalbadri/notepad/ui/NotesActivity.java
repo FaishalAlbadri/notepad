@@ -2,6 +2,7 @@ package com.faishalbadri.notepad.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.Html;
@@ -288,7 +289,11 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
     public void saveAsPDFNotes() {
         String titleText = edtTitle.getText().toString();
         String bodyText = edtDesc.getHtml();
-        String path = getExternalFilesDir(null).toString() + "/" + titleText.toLowerCase().replace(" ", "-") + ".pdf";
+        File root = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "notepad-islamic");
+        if (!root.exists()) {
+            root.mkdirs();
+        }
+        String path = root + titleText.toLowerCase().replace(" ", "-") + ".pdf";
         PdfConverter converter = PdfConverter.getInstance();
         File file = new File(path);
         converter.convert(getApplicationContext(), "<b>" + titleText + "</b><br>" +bodyText, file);
