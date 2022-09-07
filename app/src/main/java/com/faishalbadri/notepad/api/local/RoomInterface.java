@@ -37,6 +37,12 @@ public interface RoomInterface {
     @Query("SELECT * FROM note ORDER BY pinned DESC, notes_date DESC")
     List<DataNotes> getNotesAll();
 
+    @Query("SELECT * FROM surat WHERE name = :surat")
+    List<DataAlquranSurat> getSuratByName(String surat);
+
+    @Query("SELECT * FROM ayat WHERE verse = :verse AND id_surah = :id_surat")
+    List<DataAlquranAyat> getAyatBySurat(int verse, int id_surat);
+
     @Query("SELECT * FROM surat ORDER BY id ASC")
     List<DataAlquranSurat> getAlquranSuratAll();
 

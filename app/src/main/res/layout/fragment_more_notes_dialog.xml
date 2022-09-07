@@ -7,6 +7,20 @@
     tools:context=".ui.dialogfragment.MoreNotesDialogFragment">
 
     <TextView
+        android:id="@+id/btn_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:drawableLeft="@drawable/ic_search_primary"
+        android:drawablePadding="8dp"
+        android:drawableTint="@color/black"
+        android:padding="16dp"
+        android:text="Search Alquran"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <TextView
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +30,7 @@
         android:drawableTint="@color/gray_aaa"
         android:padding="16dp"
         android:text="Save as PDF"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_70"
         android:textSize="16sp" />
 
     <TextView

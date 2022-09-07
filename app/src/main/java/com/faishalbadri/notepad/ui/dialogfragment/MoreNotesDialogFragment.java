@@ -2,6 +2,7 @@ package com.faishalbadri.notepad.ui.dialogfragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.chinalwb.are.AREditText;
 import com.faishalbadri.notepad.R;
 import com.faishalbadri.notepad.ui.NotesActivity;
 
@@ -30,6 +32,10 @@ public class MoreNotesDialogFragment extends DialogFragment {
     TextView btnDelete;
     @BindView(R.id.btn_save)
     TextView btnSave;
+    @BindView(R.id.btn_search)
+    TextView btnSearch;
+
+    private AREditText edtDesc;
 
     private int pin;
 
@@ -43,6 +49,16 @@ public class MoreNotesDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_more_notes_dialog, container, false);
         ButterKnife.bind(this, view);
         pin = ((NotesActivity) getActivity()).getPinned();
+        edtDesc = ((NotesActivity) getActivity()).getEdtDesc();
+
+        Log.i("selectionstart", edtDesc.getSelectionStart() + ", " + edtDesc.getSelectionEnd());
+
+        if (edtDesc.getSelectionStart() > 0) {
+            btnSearch.setVisibility(View.VISIBLE);
+        } else {
+            edtDesc.setVisibility(View.GONE);
+        }
+
         if (pin == 0) {
             btnPin.setVisibility(View.VISIBLE);
         } else {
@@ -92,5 +108,10 @@ public class MoreNotesDialogFragment extends DialogFragment {
     public void onClickBtnSave() {
         ((NotesActivity) getActivity()).saveAsPDFNotes();
         dismiss();
+    }
+
+    @OnClick(R.id.btn_search)
+    public void onClickBtnSearch() {
+        ((NotesActivity) getActivity()).searchAlquran();
     }
 }

@@ -72,7 +72,7 @@ public class QuranItem implements Mentionable {
 	public String getTextForDisplayMode(@NonNull @NotNull MentionDisplayMode mode) {
 		switch (mode) {
 			case FULL:
-				String t = getText() + " (" + getNamaSurah() + ": " + getNoAyat() + ")";
+				String t = "\"" + getText() + "\"" + " (" + getNamaSurah() + ": " + getNoAyat() + ")";
 				return t;
 			case PARTIAL:
 				String[] words = getText().split(" ");

@@ -47,6 +47,7 @@ import com.faishalbadri.notepad.presenter.notes.NotesPresenter;
 import com.faishalbadri.notepad.ui.dialogfragment.MoreNotesDialogFragment;
 import android.print.PdfConverter;
 
+import com.faishalbadri.notepad.ui.dialogfragment.MoreNotesSearchAlquranDialogFragment;
 import com.linkedin.android.spyglass.suggestions.SuggestionsResult;
 import com.linkedin.android.spyglass.suggestions.interfaces.Suggestible;
 import com.linkedin.android.spyglass.suggestions.interfaces.SuggestionsResultListener;
@@ -113,6 +114,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
 
     private QueryToken key_auotcomplete;
 
+    private MoreNotesSearchAlquranDialogFragment moreNotesSearchAlquranDialogFragment;
     private MoreNotesDialogFragment moreNotesDialogFragment;
     private FragmentManager fragmentManager;
 
@@ -159,6 +161,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         edtDesc.setSuggestionsVisibilityManager(this);
         setToolbarEdit();
         moreNotesDialogFragment = new MoreNotesDialogFragment();
+        moreNotesSearchAlquranDialogFragment = new MoreNotesSearchAlquranDialogFragment();
         fragmentManager = getSupportFragmentManager();
         notesPresenter =
                 new NotesPresenter(
@@ -284,6 +287,16 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
     @Override
     public void onSuccessUnpinNotes() {
         setPinned(0);
+    }
+
+    public void addAlquran(String ayat){
+            int start =edtDesc.getSelectionStart();
+            edtDesc.getText().insert(start, ayat);
+    }
+
+    public void searchAlquran(){
+        moreNotesDialogFragment.dismiss();
+        moreNotesSearchAlquranDialogFragment.show(fragmentManager, "");
     }
 
     public void saveAsPDFNotes() {
