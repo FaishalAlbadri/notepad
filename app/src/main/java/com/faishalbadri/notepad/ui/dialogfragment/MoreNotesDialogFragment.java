@@ -12,10 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.chinalwb.are.AREditText;
 import com.faishalbadri.notepad.R;
 import com.faishalbadri.notepad.ui.NotesActivity;
-import com.faishalbadri.notepad.util.knife.KnifeText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +28,8 @@ public class MoreNotesDialogFragment extends DialogFragment {
     TextView btnUnpin;
     @BindView(R.id.btn_delete)
     TextView btnDelete;
+    @BindView(R.id.btn_save)
+    TextView btnSave;
 
     private int pin;
 
@@ -85,6 +85,12 @@ public class MoreNotesDialogFragment extends DialogFragment {
     @OnClick(R.id.btn_pin)
     public void onClickPin() {
         ((NotesActivity) getActivity()).pinNotes();
+        dismiss();
+    }
+
+    @OnClick(R.id.btn_save)
+    public void onClickBtnSave() {
+        ((NotesActivity) getActivity()).saveAsPDFNotes();
         dismiss();
     }
 }

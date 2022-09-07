@@ -44,6 +44,8 @@ import com.faishalbadri.notepad.presenter.alquran.AlquranPresenter;
 import com.faishalbadri.notepad.presenter.notes.NotesContract;
 import com.faishalbadri.notepad.presenter.notes.NotesPresenter;
 import com.faishalbadri.notepad.ui.dialogfragment.MoreNotesDialogFragment;
+import android.print.PdfConverter;
+
 import com.linkedin.android.spyglass.suggestions.SuggestionsResult;
 import com.linkedin.android.spyglass.suggestions.interfaces.Suggestible;
 import com.linkedin.android.spyglass.suggestions.interfaces.SuggestionsResultListener;
@@ -55,6 +57,7 @@ import com.linkedin.android.spyglass.tokenization.interfaces.QueryTokenReceiver;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -280,6 +283,16 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
     @Override
     public void onSuccessUnpinNotes() {
         setPinned(0);
+    }
+
+    public void saveAsPDFNotes() {
+        String titleText = edtTitle.getText().toString();
+        String bodyText = edtDesc.getHtml();
+        String path = getExternalFilesDir(null).toString() + "/" + titleText.toLowerCase().replace(" ", "-") + ".pdf";
+        PdfConverter converter = PdfConverter.getInstance();
+        File file = new File(path);
+        converter.convert(getApplicationContext(), "<b>" + titleText + "</b><br>" +bodyText, file);
+        Toast.makeText(this, "Save as PDF Successfully", Toast.LENGTH_SHORT).show();
     }
 
     public void pinNotes() {
