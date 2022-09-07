@@ -252,6 +252,9 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
 
     @OnClick(R.id.btn_more)
     public void onClickMore() {
+        if (edtDesc.getSelectionStart() == 0) {
+            edtDesc.setSelection(1);
+        }
         moreNotesDialogFragment.show(fragmentManager, "");
     }
 
