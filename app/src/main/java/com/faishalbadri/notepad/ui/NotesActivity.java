@@ -309,7 +309,7 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         if (!root.exists()) {
             root.mkdirs();
         }
-        String path = root + titleText.toLowerCase().replace(" ", "-") + ".pdf";
+        String path = root + "/" +titleText.toLowerCase().replace(" ", "-") + ".pdf";
         PdfConverter converter = PdfConverter.getInstance();
         File file = new File(path);
         converter.convert(getApplicationContext(), "<b>" + titleText + "</b><br>" +bodyText, file);
