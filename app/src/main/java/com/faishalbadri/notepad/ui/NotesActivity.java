@@ -252,9 +252,6 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
 
     @OnClick(R.id.btn_more)
     public void onClickMore() {
-        if (edtDesc.getSelectionStart() == 0) {
-            edtDesc.setSelection(1);
-        }
         moreNotesDialogFragment.show(fragmentManager, "");
     }
 
@@ -314,6 +311,14 @@ public class NotesActivity extends AppCompatActivity implements NotesContract.no
         File file = new File(path);
         converter.convert(getApplicationContext(), "<b>" + titleText + "</b><br>" +bodyText, file);
         Toast.makeText(this, "Save as PDF Successfully", Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean edtDescription() {
+        if (edtDesc.getSelectionStart() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void pinNotes() {

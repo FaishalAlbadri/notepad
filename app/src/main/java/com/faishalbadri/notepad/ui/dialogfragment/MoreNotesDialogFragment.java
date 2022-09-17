@@ -35,9 +35,8 @@ public class MoreNotesDialogFragment extends DialogFragment {
     @BindView(R.id.btn_search)
     TextView btnSearch;
 
-    private AREditText edtDesc;
-
     private int pin;
+    private boolean getEdtDesc;
 
     public MoreNotesDialogFragment() {
 
@@ -49,14 +48,12 @@ public class MoreNotesDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_more_notes_dialog, container, false);
         ButterKnife.bind(this, view);
         pin = ((NotesActivity) getActivity()).getPinned();
-        edtDesc = ((NotesActivity) getActivity()).getEdtDesc();
+        getEdtDesc = ((NotesActivity) getActivity()).edtDescription();
 
-        Log.i("selectionstart", edtDesc.getSelectionStart() + ", " + edtDesc.getSelectionEnd());
-
-        if (edtDesc.getSelectionStart() > 0) {
+        if (getEdtDesc) {
             btnSearch.setVisibility(View.VISIBLE);
         } else {
-            edtDesc.setVisibility(View.GONE);
+            btnSearch.setVisibility(View.GONE);
         }
 
         if (pin == 0) {
