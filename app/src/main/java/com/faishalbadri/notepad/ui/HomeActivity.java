@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,6 +55,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
     CardView cvTextSummarizer;
     @BindView(R.id.layout_blank)
     ConstraintLayout layoutBlank;
+    @BindView(R.id.btn_more)
+    ImageView btnMore;
 
     private HomePresenter homePresenter;
     private LinearLayoutManager linearLayoutManager;
@@ -125,6 +130,24 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
                 handler.postDelayed(input_finish_checker, delay);
             }
         });
+    }
+
+    @OnClick(R.id.btn_more)
+    public void onClickBtnMore() {
+        PopupMenu popupMenu = new PopupMenu(HomeActivity.this, btnMore);
+        popupMenu.getMenuInflater().inflate(R.menu.home_popup_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.aboutus:
+                        startActivity(new Intent(getApplicationContext(), AboutUsActivity.class));
+                        break;
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
     }
 
     @OnClick(R.id.btn_text_summarizer)
