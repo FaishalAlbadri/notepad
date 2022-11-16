@@ -39,12 +39,12 @@ public class AboutUsActivity extends AppCompatActivity {
                 .into(imgFaishal);
 
         Glide.with(this)
-                .load(getImage("faishal"))
+                .load(getImage("mayla"))
                 .circleCrop()
                 .into(imgMayla);
 
         Glide.with(this)
-                .load(getImage("faishal"))
+                .load(getImage("rizan"))
                 .circleCrop()
                 .into(imgRizan);
 
