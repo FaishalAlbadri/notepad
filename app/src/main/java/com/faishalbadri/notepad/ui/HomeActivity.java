@@ -6,9 +6,13 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,6 +42,14 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
     RecyclerView rvNotes;
     @BindView(R.id.btn_new_note)
     FloatingActionButton btnNewNote;
+    @BindView(R.id.btn_ex_fab)
+    FloatingActionButton btnExFab;
+    @BindView(R.id.btn_text_summarizer)
+    FloatingActionButton btnTextSummarizer;
+    @BindView(R.id.cv_new_note)
+    CardView cvNewNote;
+    @BindView(R.id.cv_text_summarizer)
+    CardView cvTextSummarizer;
     @BindView(R.id.layout_blank)
     ConstraintLayout layoutBlank;
 
@@ -54,6 +66,9 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
     private int pinnedByItem = 3;
     private int idByItem;
     private DataNotes dataNotesByItem;
+
+    private Animation fab_open, fab_close, fab_clock, fab_anticlock;
+    Boolean isOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +93,11 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
     };
 
     private void setView() {
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_clock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clock);
+        fab_anticlock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlock);
+
         moreHomeDialogFragment = new MoreHomeDialogFragment();
         fragmentManager = getSupportFragmentManager();
 
@@ -107,9 +127,63 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
         });
     }
 
+    @OnClick(R.id.btn_text_summarizer)
+    public void onClickTextSummarizer() {
+        Toast.makeText(this, "Text Summarizer", Toast.LENGTH_SHORT).show();
+        hideFAB();
+    }
+
     @OnClick(R.id.btn_new_note)
     public void onClickNewNote() {
         homePresenter.addNotes();
+        hideFAB();
+    }
+
+    @OnClick(R.id.cv_text_summarizer)
+    public void onClickCVTextSummarizer() {
+        Toast.makeText(this, "Text Summarizer", Toast.LENGTH_SHORT).show();
+        hideFAB();
+    }
+
+    @OnClick(R.id.cv_new_note)
+    public void onClickCVNewNote() {
+        homePresenter.addNotes();
+        hideFAB();
+    }
+
+    @OnClick(R.id.btn_ex_fab)
+    public void onClickExFab() {
+        if (isOpen) {
+            hideFAB();
+        }  else {
+            showFAB();
+        }
+    }
+
+    public void hideFAB() {
+        cvNewNote.setVisibility(View.GONE);
+        cvTextSummarizer.setVisibility(View.GONE);
+        btnNewNote.setVisibility(View.GONE);
+        btnTextSummarizer.setVisibility(View.GONE);
+        cvNewNote.startAnimation(fab_close);
+        cvTextSummarizer.startAnimation(fab_close);
+        btnNewNote.startAnimation(fab_close);
+        btnTextSummarizer.startAnimation(fab_close);
+        btnExFab.startAnimation(fab_anticlock);
+        isOpen = false;
+    }
+
+    public void showFAB() {
+        cvNewNote.setVisibility(View.VISIBLE);
+        cvTextSummarizer.setVisibility(View.VISIBLE);
+        btnNewNote.setVisibility(View.VISIBLE);
+        btnTextSummarizer.setVisibility(View.VISIBLE);
+        cvNewNote.startAnimation(fab_open);
+        cvTextSummarizer.startAnimation(fab_open);
+        btnNewNote.startAnimation(fab_open);
+        btnTextSummarizer.startAnimation(fab_open);
+        btnExFab.startAnimation(fab_clock);
+        isOpen = true;
     }
 
     @Override

@@ -45,11 +45,11 @@ public class SplashScreen extends AppCompatActivity implements SplashScreenContr
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             if (introManager.isFirstTimeLaunch()) {
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                introManager.setFirstTimeLaunch(false);
+                startActivity(new Intent(getApplicationContext(), IntroActivity.class));
                 finish();
             } else {
-                introManager.setFirstTimeLaunch(true);
-                startActivity(new Intent(getApplicationContext(), IntroActivity.class));
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 finish();
             }
 

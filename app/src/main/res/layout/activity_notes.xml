@@ -24,10 +24,10 @@
         android:paddingRight="16dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_back"
-        android:tint="@color/white"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <TextView
         android:layout_width="0dp"
@@ -55,10 +55,10 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:src="@drawable/ic_more"
-        android:tint="@color/white"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_title"
@@ -179,6 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
+                android:backgroundTint="@android:color/transparent"
                 android:gravity="start"
                 android:hint="Start typing  here"
                 android:importantForAutofill="no"

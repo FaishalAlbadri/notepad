@@ -76,6 +76,8 @@ dependencies {
     implementation project(':are')
     implementation 'com.linkedin.android.spyglass:spyglass:3.0.1'
 
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 }
