@@ -181,7 +181,7 @@
                 android:background="@android:color/transparent"
                 android:backgroundTint="@android:color/transparent"
                 android:gravity="start"
-                android:hint="Start typing  here"
+                android:hint="Start typing here"
                 android:importantForAutofill="no"
                 android:inputType="textNoSuggestions|textMultiLine|textVisiblePassword"/>
         </LinearLayout>
