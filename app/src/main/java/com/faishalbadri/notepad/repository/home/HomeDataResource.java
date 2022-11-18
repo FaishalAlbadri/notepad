@@ -20,8 +20,11 @@ public interface HomeDataResource {
 
     void addNotes(@NonNull NotesAddCallback notesAddCallback);
 
+    void addNotes(String judul, String isi, @NonNull NotesAddCallback notesAddCallback);
+
     interface NotesAddCallback {
         void onSuccessAddNotes(int id);
+        void onSuccessAddNotes(int id, String judul, String isi);
     }
 
     interface NotesGetCallback {

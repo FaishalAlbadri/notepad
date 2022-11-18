@@ -26,9 +26,13 @@ import com.faishalbadri.notepad.adapter.NotesAdapter;
 import com.faishalbadri.notepad.api.local.RoomClient;
 import com.faishalbadri.notepad.data.DataNotes;
 import com.faishalbadri.notepad.di.HomeRepositoryInject;
+import com.faishalbadri.notepad.di.SummarizationRepositoryInject;
 import com.faishalbadri.notepad.presenter.home.HomeContract;
 import com.faishalbadri.notepad.presenter.home.HomePresenter;
+import com.faishalbadri.notepad.presenter.summarization.SummarizationContract;
+import com.faishalbadri.notepad.presenter.summarization.SummarizationPresenter;
 import com.faishalbadri.notepad.ui.dialogfragment.MoreHomeDialogFragment;
+import com.faishalbadri.notepad.ui.dialogfragment.SummarizationDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -37,7 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HomeActivity extends AppCompatActivity implements HomeContract.homeView {
+public class HomeActivity extends AppCompatActivity implements HomeContract.homeView, SummarizationContract.summarizationView {
 
     @BindView(R.id.edt_search)
     EditText edtSearch;
@@ -59,6 +63,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
     ImageView btnMore;
 
     private HomePresenter homePresenter;
+    private SummarizationPresenter summarizationPresenter;
     private LinearLayoutManager linearLayoutManager;
 
     private long delay = 300;
@@ -66,6 +71,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
     private Handler handler = new Handler();
 
     private MoreHomeDialogFragment moreHomeDialogFragment;
+    private SummarizationDialogFragment summarizationDialogFragment;
     private FragmentManager fragmentManager;
 
     private int pinnedByItem = 3;
@@ -104,12 +110,16 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
         fab_anticlock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlock);
 
         moreHomeDialogFragment = new MoreHomeDialogFragment();
+        summarizationDialogFragment = new SummarizationDialogFragment();
         fragmentManager = getSupportFragmentManager();
 
         homePresenter =
                 new HomePresenter(
                         HomeRepositoryInject.provideTo(RoomClient.getInstance(this)));
         homePresenter.onAttachView(this);
+
+        summarizationPresenter = new SummarizationPresenter(SummarizationRepositoryInject.provideTo(this));
+        summarizationPresenter.onAttachView(this);
 
         linearLayoutManager = new LinearLayoutManager(this);
         rvNotes.setLayoutManager(linearLayoutManager);
@@ -152,7 +162,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
 
     @OnClick(R.id.btn_text_summarizer)
     public void onClickTextSummarizer() {
-        Toast.makeText(this, "Text Summarizer", Toast.LENGTH_SHORT).show();
+        summarizationDialogFragment.show(fragmentManager, "");
         hideFAB();
     }
 
@@ -164,7 +174,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
 
     @OnClick(R.id.cv_text_summarizer)
     public void onClickCVTextSummarizer() {
-        Toast.makeText(this, "Text Summarizer", Toast.LENGTH_SHORT).show();
+        summarizationDialogFragment.show(fragmentManager, "");
         hideFAB();
     }
 
@@ -178,12 +188,16 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
     public void onClickExFab() {
         if (isOpen) {
             hideFAB();
-        }  else {
+        } else {
             showFAB();
         }
     }
 
     public void hideFAB() {
+        cvNewNote.setClickable(false);
+        cvTextSummarizer.setClickable(false);
+        btnNewNote.setClickable(false);
+        btnTextSummarizer.setClickable(false);
         cvNewNote.setVisibility(View.GONE);
         cvTextSummarizer.setVisibility(View.GONE);
         btnNewNote.setVisibility(View.GONE);
@@ -197,6 +211,10 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
     }
 
     public void showFAB() {
+        cvNewNote.setClickable(true);
+        cvTextSummarizer.setClickable(true);
+        btnNewNote.setClickable(true);
+        btnTextSummarizer.setClickable(true);
         cvNewNote.setVisibility(View.VISIBLE);
         cvTextSummarizer.setVisibility(View.VISIBLE);
         btnNewNote.setVisibility(View.VISIBLE);
@@ -242,6 +260,11 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
         startActivity(new Intent(getApplicationContext(), NotesActivity.class).putExtra("id", id));
     }
 
+    @Override
+    public void onSuccessAddNotes(int id, String judul, String isi) {
+        homePresenter.getNotes();
+    }
+
     public void pinNotes() {
         homePresenter.pinNotes(idByItem);
     }
@@ -271,5 +294,19 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.home
         edtSearch.setText("");
         edtSearch.clearFocus();
         homePresenter.getNotes();
+    }
+
+    @Override
+    public void onSuccessSummarization(String judul, String Isi) {
+        homePresenter.addNotes(judul, Isi);
+    }
+
+    @Override
+    public void onErrorSummarization(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public void textSummarization(String text) {
+        summarizationPresenter.getSummarization(text);
     }
 }

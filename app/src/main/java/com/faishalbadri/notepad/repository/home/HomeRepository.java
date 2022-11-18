@@ -43,4 +43,9 @@ public class HomeRepository implements HomeDataResource {
     public void addNotes(@NonNull @NotNull NotesAddCallback notesAddCallback) {
         homeDataResource.addNotes(notesAddCallback);
     }
+
+    @Override
+    public void addNotes(String judul, String isi, @NonNull NotesAddCallback notesAddCallback) {
+        homeDataResource.addNotes(judul, isi, notesAddCallback);
+    }
 }

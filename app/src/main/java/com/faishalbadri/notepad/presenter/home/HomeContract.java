@@ -18,6 +18,8 @@ public class HomeContract {
         void onSuccessUnpinNotes();
 
         void onSuccessAddNotes(int id);
+
+        void onSuccessAddNotes(int id, String judul, String isi);
     }
 
     public interface homePresenter extends BasePresenter<homeView> {
@@ -32,6 +34,8 @@ public class HomeContract {
         void unpinNotes(int id);
 
         void addNotes();
+
+        void addNotes(String judul, String isi);
     }
 
 }

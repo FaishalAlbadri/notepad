@@ -66,4 +66,19 @@ public class HomeDataLocal implements HomeDataResource {
         Log.i("new notes", "id terbaru : " + newNotes.getId_notes());
         notesAddCallback.onSuccessAddNotes(newNotes.getId_notes());
     }
+
+    @Override
+    public void addNotes(String judul, String isi, @NonNull NotesAddCallback notesAddCallback) {
+        DataNotes dataNotes = new DataNotes();
+        dataNotes.setNotes_title(judul);
+        dataNotes.setNotes_desc(isi);
+        dataNotes.setDates(Calendar.getInstance().getTime());
+        dataNotes.setPinned(0);
+        database.roomInterface().addNotes(dataNotes);
+
+        List<DataNotes> list = database.roomInterface().getLastNotes();
+        DataNotes newNotes = list.get(0);
+        Log.i("new notes", "id terbaru : " + newNotes.getId_notes());
+        notesAddCallback.onSuccessAddNotes(newNotes.getId_notes(), judul, isi);
+    }
 }

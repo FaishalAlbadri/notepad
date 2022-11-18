@@ -1,6 +1,7 @@
 package com.faishalbadri.notepad.presenter.home;
 
 import com.faishalbadri.notepad.data.DataNotes;
+import com.faishalbadri.notepad.repository.home.HomeDataResource;
 import com.faishalbadri.notepad.repository.home.HomeRepository;
 
 public class HomePresenter implements HomeContract.homePresenter {
@@ -39,7 +40,31 @@ public class HomePresenter implements HomeContract.homePresenter {
 
     @Override
     public void addNotes() {
-        homeRepository.addNotes(id -> homeView.onSuccessAddNotes(id));
+        homeRepository.addNotes(new HomeDataResource.NotesAddCallback() {
+            @Override
+            public void onSuccessAddNotes(int id) {
+                homeView.onSuccessAddNotes(id);
+            }
+
+            @Override
+            public void onSuccessAddNotes(int id, String judul, String isi) {
+            }
+        });
+    }
+
+    @Override
+    public void addNotes(String judul, String isi) {
+        homeRepository.addNotes(judul, isi, new HomeDataResource.NotesAddCallback() {
+            @Override
+            public void onSuccessAddNotes(int id) {
+
+            }
+
+            @Override
+            public void onSuccessAddNotes(int id, String judul, String isi) {
+                homeView.onSuccessAddNotes(id, judul, isi);
+            }
+        });
     }
 
     @Override

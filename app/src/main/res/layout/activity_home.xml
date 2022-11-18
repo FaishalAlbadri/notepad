@@ -170,7 +170,7 @@
                 android:paddingLeft="8dp"
                 android:paddingEnd="8dp"
                 android:paddingRight="8dp"
-                android:text="Summarizer by URL"
+                android:text="Summarizer Text"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
